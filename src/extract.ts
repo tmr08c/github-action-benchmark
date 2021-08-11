@@ -146,7 +146,7 @@ function getHumanReadableUnitValue(seconds: number): [number, string] {
     }
 }
 
-function getCommit(): Commit {
+function getCommitFromWebhookPayload(): Commit {
     /* eslint-disable @typescript-eslint/camelcase */
     if (github.context.payload.head_commit) {
         return github.context.payload.head_commit;
@@ -155,7 +155,7 @@ function getCommit(): Commit {
     const pr = github.context.payload.pull_request;
     if (!pr) {
         throw new Error(
-            `No commit information is found in payload: ${JSON.stringify(github.context.payload, null, 2)}`,
+            `No commit information is found in payload: ${JSON.stringify(github.context.payload, null, 2)}.`,
         );
     }
 
@@ -164,10 +164,10 @@ function getCommit(): Commit {
     const id: string = pr.head.sha;
     const timestamp: string = pr.head.repo.updated_at;
     const url = `${pr.html_url}/commits/${id}`;
-    const name: string = pr.head.user.login;
+    const username: string = pr.head.user.login;
     const user = {
-        name,
-        username: name, // XXX: Fallback, not correct
+        name: username, // XXX: Fallback, not correct
+        username,
     };
 
     return {
@@ -179,6 +179,44 @@ function getCommit(): Commit {
         url,
     };
     /* eslint-enable @typescript-eslint/camelcase */
+}
+
+async function getCommitFromGitHubREST(githubToken: string): Promise<Commit> {
+    // On `schedule:` and `workflow_dispatch:` events, the `.head_commit` and
+    // `.pull_request` objects are not available on the `github.context.payload`
+    // object.
+    // Therefore, we try to get the commit data of the current HEAD via GitHub
+    // REST
+    const octocat = new github.GitHub(githubToken);
+
+    const { status, data } = await octocat.repos.getCommit({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        ref: github.context.ref,
+    });
+
+    if (!(status === 200 || status === 304)) {
+        throw new Error(`Could not fetch the head commit. Received code: ${status}`);
+    }
+
+    const { commit } = data;
+
+    return {
+        author: {
+            name: commit.author.name,
+            username: data.author.login,
+            email: commit.author.email,
+        },
+        committer: {
+            name: commit.committer.name,
+            username: data.committer.login,
+            email: commit.committer.email,
+        },
+        id: data.sha,
+        message: commit.message,
+        timestamp: commit.author.date,
+        url: data.html_url,
+    };
 }
 
 function extractCargoResult(output: string): BenchmarkResult[] {
@@ -439,7 +477,7 @@ function extractCustomBenchmarkResult(output: string): BenchmarkResult[] {
 
 export async function extractResult(config: Config): Promise<Benchmark> {
     const output = await fs.readFile(config.outputFilePath, 'utf8');
-    const { tool } = config;
+    const { tool, githubToken } = config;
     let benches: BenchmarkResult[];
 
     switch (tool) {
@@ -472,7 +510,21 @@ export async function extractResult(config: Config): Promise<Benchmark> {
         throw new Error(`No benchmark result was found in ${config.outputFilePath}. Benchmark output was '${output}'`);
     }
 
-    const commit = getCommit();
+    let commit;
+
+    try {
+        commit = getCommitFromWebhookPayload();
+    } catch (err) {
+        if (!githubToken) {
+            if (err instanceof Error) {
+                throw new Error(`${err.message} No github-token provided, could not fallback to GitHub API Request.`);
+            } else {
+                throw err;
+            }
+        }
+
+        commit = await getCommitFromGitHubREST(githubToken);
+    }
 
     return {
         commit,
