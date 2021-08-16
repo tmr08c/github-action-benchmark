@@ -22,6 +22,7 @@ This action currently supports the following tools:
 - [pytest-benchmark][] for Python projects with [pytest][]
 - [Google Benchmark Framework][google-benchmark] for C++ projects
 - [Catch2][catch2] for C++ projects
+- Custom benchmarks either 'ascending' or 'descending'
 
 Multiple languages in the same repository are supported for polyglot projects.
 
@@ -517,9 +518,6 @@ Every release will appear on your GitHub notifications page.
 
 ## Future work
 
-- Allow user-defined benchmark tool
-  - Accept benchmark results as an array of benchmark results as JSON. User can generate JSON file
-    to integrate any benchmarking tool to this action
 - Support pull requests. Instead of updating GitHub pages, add a comment to the pull request to explain
   benchmark results.
 - Add more benchmark tools:

@@ -133,6 +133,14 @@ export interface PytestBenchmarkJson {
     version: string;
 }
 
+export interface CustomBenchmarkJson {
+    benchmarks: Array<{
+        Name: string;
+        Value: number;
+        Unit: string;
+    }>;
+}
+
 function getHumanReadableUnitValue(seconds: number): [number, string] {
     if (seconds < 1.0e-6) {
         return [seconds * 1e9, 'nsec'];
@@ -220,6 +228,44 @@ async function getCommit(githubToken?: string): Promise<Commit> {
     }
 
     return getCommitFromGitHubAPIRequest(githubToken);
+}
+
+async function getCommitFromGitHubREST(githubToken: string): Promise<Commit> {
+    // On `schedule:` and `workflow_dispatch:` events, the `.head_commit` and
+    // `.pull_request` objects are not available on the `github.context.payload`
+    // object.
+    // Therefore, we try to get the commit data of the current HEAD via GitHub
+    // REST
+    const octocat = new github.GitHub(githubToken);
+
+    const { status, data } = await octocat.repos.getCommit({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        ref: github.context.ref,
+    });
+
+    if (!(status === 200 || status === 304)) {
+        throw new Error(`Could not fetch the head commit. Received code: ${status}`);
+    }
+
+    const { commit } = data;
+
+    return {
+        author: {
+            name: commit.author.name,
+            username: data.author.login,
+            email: commit.author.email,
+        },
+        committer: {
+            name: commit.committer.name,
+            username: data.committer.login,
+            email: commit.committer.email,
+        },
+        id: data.sha,
+        message: commit.message,
+        timestamp: commit.author.date,
+        url: data.html_url,
+    };
 }
 
 function extractCargoResult(output: string): BenchmarkResult[] {
@@ -464,6 +510,20 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
     return ret;
 }
 
+function extractCustomBenchmarkResult(output: string): BenchmarkResult[] {
+    try {
+        const json: CustomBenchmarkJson = JSON.parse(output);
+        return json.benchmarks.map(bench => {
+            const { Name: name, Value: value, Unit: unit } = bench;
+            return { name, value, unit, range: undefined, extra: undefined };
+        });
+    } catch (err) {
+        throw new Error(
+            `Output file for 'custom-descending/ascending-benchmark' must be JSON file generated according to CustomBenchmarkJson format: ${err.message}`,
+        );
+    }
+}
+
 export async function extractResult(config: Config): Promise<Benchmark> {
     const output = await fs.readFile(config.outputFilePath, 'utf8');
     const { tool, githubToken } = config;
@@ -487,6 +547,12 @@ export async function extractResult(config: Config): Promise<Benchmark> {
             break;
         case 'catch2':
             benches = extractCatch2Result(output);
+            break;
+        case 'custom-ascending-benchmark':
+            benches = extractCustomBenchmarkResult(output);
+            break;
+        case 'custom-descending-benchmark':
+            benches = extractCustomBenchmarkResult(output);
             break;
         default:
             throw new Error(`FATAL: Unexpected tool: '${tool}'`);

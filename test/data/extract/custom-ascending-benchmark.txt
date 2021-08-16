@@ -1,0 +1,10 @@
+{
+    "Name": "My Custom Ascending Benchmark - Throughput",
+    "Unit": "req/s",
+    "Value": "70",
+}
+{
+    "Name": "My Custom Ascending Benchmark - Free Memory",
+    "Unit": "Megabytes",
+    "Value": 150,
+},
