@@ -249,6 +249,18 @@ function extractCatch2Result(output) {
     }
     return ret;
 }
+function extractCustomBenchmarkResult(output) {
+    try {
+        const json = JSON.parse(output);
+        return json.benchmarks.map(bench => {
+            const { Name: name, Value: value, Unit: unit } = bench;
+            return { name, value, unit, range: undefined, extra: undefined };
+        });
+    }
+    catch (err) {
+        throw new Error(`Output file for 'custombenchmark' must be JSON file generated according to CustomBenchmarkJson format: ${err.message}`);
+    }
+}
 async function extractResult(config) {
     const output = await fs_1.promises.readFile(config.outputFilePath, 'utf8');
     const { tool } = config;
@@ -271,6 +283,9 @@ async function extractResult(config) {
             break;
         case 'catch2':
             benches = extractCatch2Result(output);
+            break;
+        case 'custombenchmark':
+            benches = extractCustomBenchmarkResult(output);
             break;
         default:
             throw new Error(`FATAL: Unexpected tool: '${tool}'`);

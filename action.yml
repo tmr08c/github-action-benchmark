@@ -1,5 +1,5 @@
-name: 'Continuous Benchmark'
-author: 'rhysd <https://rhysd.github.io>'
+name: 'Continuous Benchmark + Custom Benchmarks (Demo)'
+author: 'NathanielRN <https://NathanielRN.github.io>'
 description: 'Continuous Benchmark using GitHub pages as dash board for keeping performance'
 branding:
   icon: 'fast-forward'
