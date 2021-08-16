@@ -126,6 +126,14 @@ export interface PytestBenchmarkJson {
     version: string;
 }
 
+export interface CustomBenchmarkJson {
+    benchmarks: Array<{
+        Name: string;
+        Value: number;
+        Unit: string;
+    }>;
+}
+
 function getHumanReadableUnitValue(seconds: number): [number, string] {
     if (seconds < 1.0e-6) {
         return [seconds * 1e9, 'nsec'];
@@ -415,6 +423,20 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
     return ret;
 }
 
+function extractCustomBenchmarkResult(output: string): BenchmarkResult[] {
+    try {
+        const json: CustomBenchmarkJson = JSON.parse(output);
+        return json.benchmarks.map(bench => {
+            const { Name: name, Value: value, Unit: unit} = bench;
+            return { name, value, unit, range: undefined, extra: undefined};
+        });
+    } catch (err) {
+        throw new Error(
+            `Output file for 'custombenchmark' must be JSON file generated according to CustomBenchmarkJson format: ${err.message}`,
+        );
+    }
+}
+
 export async function extractResult(config: Config): Promise<Benchmark> {
     const output = await fs.readFile(config.outputFilePath, 'utf8');
     const { tool } = config;
@@ -438,6 +460,9 @@ export async function extractResult(config: Config): Promise<Benchmark> {
             break;
         case 'catch2':
             benches = extractCatch2Result(output);
+            break;
+        case 'custombenchmark':
+            benches = extractCustomBenchmarkResult(output);
             break;
         default:
             throw new Error(`FATAL: Unexpected tool: '${tool}'`);
