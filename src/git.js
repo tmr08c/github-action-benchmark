@@ -54,14 +54,7 @@ async function cmd(...args) {
 }
 exports.cmd = cmd;
 function getRemoteUrl(token) {
-    var _a;
-    /* eslint-disable @typescript-eslint/camelcase */
-    const fullName = (_a = github.context.payload.repository) === null || _a === void 0 ? void 0 : _a.full_name;
-    /* eslint-enable @typescript-eslint/camelcase */
-    if (!fullName) {
-        throw new Error(`Repository info is not available in payload: ${JSON.stringify(github.context.payload)}`);
-    }
-    return `https://x-access-token:${token}@github.com/${fullName}.git`;
+    return `https://x-access-token:${token}@github.com/${github.context.repo.owner}/${github.context.repo.repo}.git`;
 }
 async function push(token, branch, ...options) {
     core.debug(`Executing 'git push' to branch '${branch}' with token and options '${options.join(' ')}'`);
