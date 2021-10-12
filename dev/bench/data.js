@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1591796792063,
+  "lastUpdate": 1634069853319,
   "entries": {
     "Rust Benchmark": [
       {
@@ -22739,6 +22739,44 @@ window.BENCHMARK_DATA = {
             "extra": "mean: 2.4110147870819794 msec\nrounds: 418"
           }
         ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "committer": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "distinct": true,
+          "id": "7fbd0c5a3a6fe64f9b7675856fcef69811191b5a",
+          "message": "Allow user defined custom benchmarks",
+          "timestamp": "2021-10-12T13:12:29-07:00",
+          "tree_id": "d629094ddb5171c825d725e263b5e21046ef2446",
+          "url": "https://github.com/NathanielRN/github-action-benchmark/commit/7fbd0c5a3a6fe64f9b7675856fcef69811191b5a"
+        },
+        "date": 1634069851463,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "bench.py::test_fib_10",
+            "value": 47012.75545017235,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000013243410318093318",
+            "extra": "mean: 21.27082300163995 usec\nrounds: 36232"
+          },
+          {
+            "name": "bench.py::test_fib_20",
+            "value": 394.7314251149241,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00021897182735904823",
+            "extra": "mean: 2.533368098850642 msec\nrounds: 435"
+          }
+        ]
       }
     ],
     "C++ Benchmark": [
@@ -27428,5 +27466,5 @@ window.BENCHMARK_DATA = {
       }
     ]
   },
-  "repoUrl": "https://github.com/rhysd/github-action-benchmark"
+  "repoUrl": "https://github.com/NathanielRN/github-action-benchmark"
 }
