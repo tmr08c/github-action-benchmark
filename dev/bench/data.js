@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634069861950,
+  "lastUpdate": 1634069874653,
   "entries": {
     "Rust Benchmark": [
       {
@@ -27569,6 +27569,44 @@ window.BENCHMARK_DATA = {
             "name": "Fibonacci 20",
             "value": 20.417,
             "range": "± 4.037",
+            "unit": "us",
+            "extra": "100 samples\n2 iterations"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "committer": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "distinct": true,
+          "id": "7fbd0c5a3a6fe64f9b7675856fcef69811191b5a",
+          "message": "Allow user defined custom benchmarks",
+          "timestamp": "2021-10-12T13:12:29-07:00",
+          "tree_id": "d629094ddb5171c825d725e263b5e21046ef2446",
+          "url": "https://github.com/NathanielRN/github-action-benchmark/commit/7fbd0c5a3a6fe64f9b7675856fcef69811191b5a"
+        },
+        "date": 1634069872711,
+        "tool": "catch2",
+        "benches": [
+          {
+            "name": "Fibonacci 10",
+            "value": 197,
+            "range": "± 1",
+            "unit": "ns",
+            "extra": "100 samples\n176 iterations"
+          },
+          {
+            "name": "Fibonacci 20",
+            "value": 27.867,
+            "range": "± 320",
             "unit": "us",
             "extra": "100 samples\n2 iterations"
           }
