@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634069853319,
+  "lastUpdate": 1634069854502,
   "entries": {
     "Rust Benchmark": [
       {
@@ -12027,6 +12027,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "BenchmarkFib20",
             "value": 51307,
+            "unit": "ns/op",
+            "extra": "30000 times\n2 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "committer": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "distinct": true,
+          "id": "7fbd0c5a3a6fe64f9b7675856fcef69811191b5a",
+          "message": "Allow user defined custom benchmarks",
+          "timestamp": "2021-10-12T13:12:29-07:00",
+          "tree_id": "d629094ddb5171c825d725e263b5e21046ef2446",
+          "url": "https://github.com/NathanielRN/github-action-benchmark/commit/7fbd0c5a3a6fe64f9b7675856fcef69811191b5a"
+        },
+        "date": 1634069852779,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkFib10",
+            "value": 455,
+            "unit": "ns/op",
+            "extra": "3000000 times\n2 procs"
+          },
+          {
+            "name": "BenchmarkFib20",
+            "value": 57938,
             "unit": "ns/op",
             "extra": "30000 times\n2 procs"
           }
