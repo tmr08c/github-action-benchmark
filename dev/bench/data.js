@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634069874653,
+  "lastUpdate": 1634069912044,
   "entries": {
     "Rust Benchmark": [
       {
@@ -26163,6 +26163,42 @@ window.BENCHMARK_DATA = {
             "value": 30070.168987449662,
             "unit": "ns/iter",
             "extra": "iterations: 23268\ncpu: 30057.73521574695 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "committer": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "distinct": true,
+          "id": "7fbd0c5a3a6fe64f9b7675856fcef69811191b5a",
+          "message": "Allow user defined custom benchmarks",
+          "timestamp": "2021-10-12T13:12:29-07:00",
+          "tree_id": "d629094ddb5171c825d725e263b5e21046ef2446",
+          "url": "https://github.com/NathanielRN/github-action-benchmark/commit/7fbd0c5a3a6fe64f9b7675856fcef69811191b5a"
+        },
+        "date": 1634069910625,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "fib_10",
+            "value": 205.16416143759676,
+            "unit": "ns/iter",
+            "extra": "iterations: 3352255\ncpu: 205.12955786478062 ns\nthreads: 1"
+          },
+          {
+            "name": "fib_20",
+            "value": 27535.969214859644,
+            "unit": "ns/iter",
+            "extra": "iterations: 25142\ncpu: 27534.80383422162 ns\nthreads: 1"
           }
         ]
       }
