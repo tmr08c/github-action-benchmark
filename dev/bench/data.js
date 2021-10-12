@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634069856832,
+  "lastUpdate": 1634069861950,
   "entries": {
     "Rust Benchmark": [
       {
@@ -18209,6 +18209,44 @@ window.BENCHMARK_DATA = {
             "range": "±0.57%",
             "unit": "ops/sec",
             "extra": "95 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "committer": {
+            "email": "nathanielruiz98@gmail.com",
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN"
+          },
+          "distinct": true,
+          "id": "7fbd0c5a3a6fe64f9b7675856fcef69811191b5a",
+          "message": "Allow user defined custom benchmarks",
+          "timestamp": "2021-10-12T13:12:29-07:00",
+          "tree_id": "d629094ddb5171c825d725e263b5e21046ef2446",
+          "url": "https://github.com/NathanielRN/github-action-benchmark/commit/7fbd0c5a3a6fe64f9b7675856fcef69811191b5a"
+        },
+        "date": 1634069860564,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "fib(10)",
+            "value": 1248010,
+            "range": "±1.01%",
+            "unit": "ops/sec",
+            "extra": "87 samples"
+          },
+          {
+            "name": "fib(20)",
+            "value": 10332,
+            "range": "±0.81%",
+            "unit": "ops/sec",
+            "extra": "90 samples"
           }
         ]
       }
