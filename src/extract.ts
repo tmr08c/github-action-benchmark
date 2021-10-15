@@ -440,7 +440,7 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
         if (!mean) {
             throw new Error(
                 `Mean values cannot be retrieved for benchmark '${name}' on parsing input '${meanLine ??
-                'EOF'}' at line ${meanLineNum}`,
+                    'EOF'}' at line ${meanLineNum}`,
             );
         }
 
@@ -452,7 +452,7 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
         if (!stdDev) {
             throw new Error(
                 `Std-dev values cannot be retrieved for benchmark '${name}' on parsing '${stdDevLine ??
-                'EOF'}' at line ${stdDevLineNum}`,
+                    'EOF'}' at line ${stdDevLineNum}`,
             );
         }
 
