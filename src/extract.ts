@@ -230,43 +230,43 @@ async function getCommit(githubToken?: string): Promise<Commit> {
     return getCommitFromGitHubAPIRequest(githubToken);
 }
 
-async function getCommitFromGitHubREST(githubToken: string): Promise<Commit> {
-    // On `schedule:` and `workflow_dispatch:` events, the `.head_commit` and
-    // `.pull_request` objects are not available on the `github.context.payload`
-    // object.
-    // Therefore, we try to get the commit data of the current HEAD via GitHub
-    // REST
-    const octocat = new github.GitHub(githubToken);
+// async function getCommitFromGitHubREST(githubToken: string): Promise<Commit> {
+// On `schedule:` and `workflow_dispatch:` events, the `.head_commit` and
+//     // `.pull_request` objects are not available on the `github.context.payload`
+//     // object.
+//     // Therefore, we try to get the commit data of the current HEAD via GitHub
+//     // REST
+//     const octocat = new github.GitHub(githubToken);
 
-    const { status, data } = await octocat.repos.getCommit({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        ref: github.context.ref,
-    });
+//     const { status, data } = await octocat.repos.getCommit({
+//         owner: github.context.repo.owner,
+//         repo: github.context.repo.repo,
+//         ref: github.context.ref,
+//     });
 
-    if (!(status === 200 || status === 304)) {
-        throw new Error(`Could not fetch the head commit. Received code: ${status}`);
-    }
+//     if (!(status === 200 || status === 304)) {
+//         throw new Error(`Could not fetch the head commit. Received code: ${status}`);
+//     }
 
-    const { commit } = data;
+//     const { commit } = data;
 
-    return {
-        author: {
-            name: commit.author.name,
-            username: data.author.login,
-            email: commit.author.email,
-        },
-        committer: {
-            name: commit.committer.name,
-            username: data.committer.login,
-            email: commit.committer.email,
-        },
-        id: data.sha,
-        message: commit.message,
-        timestamp: commit.author.date,
-        url: data.html_url,
-    };
-}
+//     return {
+//         author: {
+//             name: commit.author.name,
+//             username: data.author.login,
+//             email: commit.author.email,
+//         },
+//         committer: {
+//             name: commit.committer.name,
+//             username: data.committer.login,
+//             email: commit.committer.email,
+//         },
+//         id: data.sha,
+//         message: commit.message,
+//         timestamp: commit.author.date,
+//         url: data.html_url,
+//     };
+// }
 
 function extractCargoResult(output: string): BenchmarkResult[] {
     const lines = output.split(/\r?\n/g);
