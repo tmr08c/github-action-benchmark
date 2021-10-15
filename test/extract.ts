@@ -56,220 +56,228 @@ describe('extractResult()', function() {
         expected: BenchmarkResult[];
         file?: string;
     }> = [
-        {
-            tool: 'cargo',
-            expected: [
-                {
-                    name: 'bench_fib_10',
-                    range: '± 24',
-                    unit: 'ns/iter',
-                    value: 135,
-                },
-                {
-                    name: 'bench_fib_20',
-                    range: '± 755',
-                    unit: 'ns/iter',
-                    value: 18149,
-                },
-            ],
-        },
-        {
-            tool: 'catch2',
-            expected: [
-                {
-                    name: 'Fibonacci 10',
-                    range: '± 19',
-                    unit: 'ns',
-                    value: 344,
-                    extra: '100 samples\n208 iterations',
-                },
-                {
-                    name: 'Fibonacci 20',
-                    range: '± 3.256',
-                    unit: 'us',
-                    value: 41.731,
-                    extra: '100 samples\n2 iterations',
-                },
-                {
-                    name: 'Fibonacci~ 5!',
-                    range: '± 4',
-                    unit: 'ns',
-                    value: 36,
-                    extra: '100 samples\n1961 iterations',
-                },
-                {
-                    name: 'Fibonacci-15_bench',
-                    range: '± 362',
-                    unit: 'us',
-                    value: 3.789,
-                    extra: '100 samples\n20 iterations',
-                },
-            ],
-        },
-        {
-            tool: 'go',
-            expected: [
-                {
-                    name: 'BenchmarkFib10',
-                    unit: 'ns/op',
-                    value: 325,
-                    extra: '5000000 times\n8 procs',
-                },
-                {
-                    name: 'BenchmarkFib20',
-                    unit: 'ns/op',
-                    value: 40537.123,
-                    extra: '30000 times',
-                },
-            ],
-        },
-        {
-            tool: 'benchmarkjs',
-            expected: [
-                {
-                    name: 'fib(10)',
-                    range: '±0.74%',
-                    unit: 'ops/sec',
-                    value: 1431759,
-                    extra: '93 samples',
-                },
-                {
-                    name: 'fib(20)',
-                    range: '±0.32%',
-                    unit: 'ops/sec',
-                    value: 12146,
-                    extra: '96 samples',
-                },
-                {
-                    name: 'createObjectBuffer with 200 comments',
-                    range: '±1.70%',
-                    unit: 'ops/sec',
-                    value: 81.61,
-                    extra: '69 samples',
-                },
-            ],
-        },
-        {
-            tool: 'pytest',
-            expected: [
-                {
-                    name: 'bench.py::test_fib_10',
-                    range: 'stddev: 0.000006175090189861328',
-                    unit: 'iter/sec',
-                    value: 41513.272817492856,
-                    extra: 'mean: 24.08868133322941 usec\nrounds: 38523',
-                },
-                {
-                    name: 'bench.py::test_fib_20',
-                    range: 'stddev: 0.0001745301654140968',
-                    unit: 'iter/sec',
-                    value: 335.0049328331567,
-                    extra: 'mean: 2.9850306726618627 msec\nrounds: 278',
-                },
-            ],
-        },
-        {
-            tool: 'googlecpp',
-            expected: [
-                {
-                    extra: 'iterations: 3070566\ncpu: 213.65507206163295 ns\nthreads: 1',
-                    name: 'fib_10',
-                    unit: 'ns/iter',
-                    value: 214.98980114547953,
-                },
-                {
-                    extra: 'iterations: 23968\ncpu: 27364.90320427236 ns\nthreads: 1',
-                    name: 'fib_20',
-                    unit: 'ns/iter',
-                    value: 27455.600415007055,
-                },
-            ],
-        },
-        {
-            tool: 'pytest',
-            file: 'pytest_several_units.json',
-            expected: [
-                {
-                    extra: 'mean: 149.95610248628836 nsec\nrounds: 68536',
-                    name: 'bench.py::test_fib_1',
-                    range: 'stddev: 2.9351731952139377e-8',
-                    unit: 'iter/sec',
-                    value: 6668618.238403659,
-                },
-                {
-                    name: 'bench.py::test_fib_10',
-                    range: 'stddev: 0.000005235937482008476',
-                    unit: 'iter/sec',
-                    value: 34652.98828915334,
-                    extra: 'mean: 28.85754012484424 usec\nrounds: 20025',
-                },
-                {
-                    name: 'bench.py::test_fib_20',
-                    range: 'stddev: 0.0003737982822178215',
-                    unit: 'iter/sec',
-                    value: 276.8613383807958,
-                    extra: 'mean: 3.611916368852473 msec\nrounds: 122',
-                },
-                {
-                    extra: 'mean: 2.0038430469999997 sec\nrounds: 5',
-                    name: 'bench.py::test_sleep_2',
-                    range: 'stddev: 0.0018776587251587858',
-                    unit: 'iter/sec',
-                    value: 0.49904108083570886,
-                },
-            ],
-        },
-        {
-            tool: 'catch2',
-            file: 'issue16_output.txt',
-            expected: [
-                {
-                    extra: '100 samples\n76353 iterations',
-                    name: 'Fibonacci 10',
-                    range: '± 0',
-                    unit: 'ns',
-                    value: 0,
-                },
-                {
-                    extra: '100 samples\n75814 iterations',
-                    name: 'Fibonacci 20',
-                    range: '± 0',
-                    unit: 'ns',
-                    value: 1,
-                },
-            ],
-        },
-        {
-            tool: 'custom-ascending-benchmark',
-            expected: [
-                {
-                    name: 'My Custom Ascending Benchmark - Throughput',
-                    unit: 'req/s',
-                    value: 70,
-                },
-                {
-                    name: 'My Custom Ascending Benchmark - Free Memory',
-                    unit: 'Megabytes',
-                    value: 150,
-                },
-            ],
-        },
-        {
-            tool: 'custom-descending-benchmark',
-            expected: [
-                {
-                    name: 'My Custom Descending Benchmark - CPU Load',
-                    unit: 'Percent',
-                    value: 50,
-                },
-                {
-                    name: 'My Custom Descending Benchmark - Memory Used',
-                    unit: 'Megabytes',
-                    value: 100,
-                },
-            ],
-        },
-    ];
+            {
+                tool: 'cargo',
+                expected: [
+                    {
+                        name: 'bench_fib_10',
+                        range: '± 24',
+                        unit: 'ns/iter',
+                        value: 135,
+                    },
+                    {
+                        name: 'bench_fib_20',
+                        range: '± 755',
+                        unit: 'ns/iter',
+                        value: 18149,
+                    },
+                ],
+            },
+            {
+                tool: 'catch2',
+                expected: [
+                    {
+                        name: 'Fibonacci 10',
+                        range: '± 19',
+                        unit: 'ns',
+                        value: 344,
+                        extra: '100 samples\n208 iterations',
+                    },
+                    {
+                        name: 'Fibonacci 20',
+                        range: '± 3.256',
+                        unit: 'us',
+                        value: 41.731,
+                        extra: '100 samples\n2 iterations',
+                    },
+                    {
+                        name: 'Fibonacci~ 5!',
+                        range: '± 4',
+                        unit: 'ns',
+                        value: 36,
+                        extra: '100 samples\n1961 iterations',
+                    },
+                    {
+                        name: 'Fibonacci-15_bench',
+                        range: '± 362',
+                        unit: 'us',
+                        value: 3.789,
+                        extra: '100 samples\n20 iterations',
+                    },
+                ],
+            },
+            {
+                tool: 'go',
+                expected: [
+                    {
+                        name: 'BenchmarkFib10',
+                        unit: 'ns/op',
+                        value: 325,
+                        extra: '5000000 times\n8 procs',
+                    },
+                    {
+                        name: 'BenchmarkFib20',
+                        unit: 'ns/op',
+                        value: 40537.123,
+                        extra: '30000 times',
+                    },
+                ],
+            },
+            {
+                tool: 'benchmarkjs',
+                expected: [
+                    {
+                        name: 'fib(10)',
+                        range: '±0.74%',
+                        unit: 'ops/sec',
+                        value: 1431759,
+                        extra: '93 samples',
+                    },
+                    {
+                        name: 'fib(20)',
+                        range: '±0.32%',
+                        unit: 'ops/sec',
+                        value: 12146,
+                        extra: '96 samples',
+                    },
+                    {
+                        name: 'createObjectBuffer with 200 comments',
+                        range: '±1.70%',
+                        unit: 'ops/sec',
+                        value: 81.61,
+                        extra: '69 samples',
+                    },
+                ],
+            },
+            {
+                tool: 'pytest',
+                expected: [
+                    {
+                        name: 'bench.py::test_fib_10',
+                        range: 'stddev: 0.000006175090189861328',
+                        unit: 'iter/sec',
+                        value: 41513.272817492856,
+                        extra: 'mean: 24.08868133322941 usec\nrounds: 38523',
+                    },
+                    {
+                        name: 'bench.py::test_fib_20',
+                        range: 'stddev: 0.0001745301654140968',
+                        unit: 'iter/sec',
+                        value: 335.0049328331567,
+                        extra: 'mean: 2.9850306726618627 msec\nrounds: 278',
+                    },
+                ],
+            },
+            {
+                tool: 'googlecpp',
+                expected: [
+                    {
+                        extra: 'iterations: 3070566\ncpu: 213.65507206163295 ns\nthreads: 1',
+                        name: 'fib_10',
+                        unit: 'ns/iter',
+                        value: 214.98980114547953,
+                    },
+                    {
+                        extra: 'iterations: 23968\ncpu: 27364.90320427236 ns\nthreads: 1',
+                        name: 'fib_20',
+                        unit: 'ns/iter',
+                        value: 27455.600415007055,
+                    },
+                ],
+            },
+            {
+                tool: 'pytest',
+                file: 'pytest_several_units.json',
+                expected: [
+                    {
+                        extra: 'mean: 149.95610248628836 nsec\nrounds: 68536',
+                        name: 'bench.py::test_fib_1',
+                        range: 'stddev: 2.9351731952139377e-8',
+                        unit: 'iter/sec',
+                        value: 6668618.238403659,
+                    },
+                    {
+                        name: 'bench.py::test_fib_10',
+                        range: 'stddev: 0.000005235937482008476',
+                        unit: 'iter/sec',
+                        value: 34652.98828915334,
+                        extra: 'mean: 28.85754012484424 usec\nrounds: 20025',
+                    },
+                    {
+                        name: 'bench.py::test_fib_20',
+                        range: 'stddev: 0.0003737982822178215',
+                        unit: 'iter/sec',
+                        value: 276.8613383807958,
+                        extra: 'mean: 3.611916368852473 msec\nrounds: 122',
+                    },
+                    {
+                        extra: 'mean: 2.0038430469999997 sec\nrounds: 5',
+                        name: 'bench.py::test_sleep_2',
+                        range: 'stddev: 0.0018776587251587858',
+                        unit: 'iter/sec',
+                        value: 0.49904108083570886,
+                    },
+                ],
+            },
+            {
+                tool: 'catch2',
+                file: 'issue16_output.txt',
+                expected: [
+                    {
+                        extra: '100 samples\n76353 iterations',
+                        name: 'Fibonacci 10',
+                        range: '± 0',
+                        unit: 'ns',
+                        value: 0,
+                    },
+                    {
+                        extra: '100 samples\n75814 iterations',
+                        name: 'Fibonacci 20',
+                        range: '± 0',
+                        unit: 'ns',
+                        value: 1,
+                    },
+                ],
+            },
+            {
+                tool: 'custom-ascending-benchmark',
+                expected: [
+                    {
+                        name: 'My Custom Ascending Benchmark - Throughput',
+                        unit: 'req/s',
+                        value: 70,
+                        extra: undefined,
+                        range: undefined,
+                    },
+                    {
+                        name: 'My Custom Ascending Benchmark - Free Memory',
+                        unit: 'Megabytes',
+                        value: 150,
+                        extra: undefined,
+                        range: undefined,
+                    },
+                ],
+            },
+            {
+                tool: 'custom-descending-benchmark',
+                expected: [
+                    {
+                        name: 'My Custom Descending Benchmark - CPU Load',
+                        unit: 'Percent',
+                        value: 50,
+                        extra: undefined,
+                        range: undefined,
+                    },
+                    {
+                        name: 'My Custom Descending Benchmark - Memory Used',
+                        unit: 'Megabytes',
+                        value: 100,
+                        extra: undefined,
+                        range: undefined,
+                    },
+                ],
+            },
+        ];
 
     for (const test of normalCases) {
         it('extracts benchmark output from ' + test.tool, async function() {
@@ -318,13 +326,13 @@ describe('extractResult()', function() {
         file: string;
         expected: RegExp;
     }> = [
-        ...(['pytest', 'googlecpp'] as const).map(tool => ({
-            it: `raises an error when output file is not in JSON with tool '${tool}'`,
-            tool,
-            file: 'go_output.txt',
-            expected: /must be JSON file/,
-        })),
-    ];
+            ...(['pytest', 'googlecpp'] as const).map(tool => ({
+                it: `raises an error when output file is not in JSON with tool '${tool}'`,
+                tool,
+                file: 'go_output.txt',
+                expected: /must be JSON file/,
+            })),
+        ];
 
     for (const t of toolSpecificErrorCases) {
         it(t.it, async function() {

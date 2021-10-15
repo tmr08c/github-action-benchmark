@@ -134,11 +134,9 @@ export interface PytestBenchmarkJson {
 }
 
 export interface CustomBenchmarkJson {
-    benchmarks: Array<{
-        Name: string;
-        Value: number;
-        Unit: string;
-    }>;
+    Name: string;
+    Value: number;
+    Unit: string;
 }
 
 function getHumanReadableUnitValue(seconds: number): [number, string] {
@@ -442,7 +440,7 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
         if (!mean) {
             throw new Error(
                 `Mean values cannot be retrieved for benchmark '${name}' on parsing input '${meanLine ??
-                    'EOF'}' at line ${meanLineNum}`,
+                'EOF'}' at line ${meanLineNum}`,
             );
         }
 
@@ -454,7 +452,7 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
         if (!stdDev) {
             throw new Error(
                 `Std-dev values cannot be retrieved for benchmark '${name}' on parsing '${stdDevLine ??
-                    'EOF'}' at line ${stdDevLineNum}`,
+                'EOF'}' at line ${stdDevLineNum}`,
             );
         }
 
@@ -512,8 +510,8 @@ function extractCatch2Result(output: string): BenchmarkResult[] {
 
 function extractCustomBenchmarkResult(output: string): BenchmarkResult[] {
     try {
-        const json: CustomBenchmarkJson = JSON.parse(output);
-        return json.benchmarks.map(bench => {
+        const json: [CustomBenchmarkJson] = JSON.parse(output);
+        return json.map(bench => {
             const { Name: name, Value: value, Unit: unit } = bench;
             return { name, value, unit, range: undefined, extra: undefined };
         });

@@ -1,10 +1,12 @@
-{
-    "Name": "My Custom Descending Benchmark - CPU Load",
-    "Unit": "Percent",
-    "Value": "50",
-}
-{
-    "Name": "My Custom Descending Benchmark - Memory Used",
-    "Unit": "Megabytes",
-    "Value": 100,
-},
+[
+    {
+        "Name": "My Custom Descending Benchmark - CPU Load",
+        "Unit": "Percent",
+        "Value": 50
+    },
+    {
+        "Name": "My Custom Descending Benchmark - Memory Used",
+        "Unit": "Megabytes",
+        "Value": 100
+    }
+]
