@@ -243,13 +243,13 @@ describe('extractResult()', function() {
             tool: 'custom-ascending-benchmark',
             expected: [
                 {
-                    name: "My Custom Ascending Benchmark - Throughput",
-                    unit: "req/s",
+                    name: 'My Custom Ascending Benchmark - Throughput',
+                    unit: 'req/s',
                     value: 70,
                 },
                 {
-                    name: "My Custom Ascending Benchmark - Free Memory",
-                    unit: "Megabytes",
+                    name: 'My Custom Ascending Benchmark - Free Memory',
+                    unit: 'Megabytes',
                     value: 150,
                 },
             ],
@@ -258,13 +258,13 @@ describe('extractResult()', function() {
             tool: 'custom-descending-benchmark',
             expected: [
                 {
-                    name: "My Custom Descending Benchmark - CPU Load",
-                    unit: "Percent",
+                    name: 'My Custom Descending Benchmark - CPU Load',
+                    unit: 'Percent',
                     value: 50,
                 },
                 {
-                    name: "My Custom Descending Benchmark - Memory Used",
-                    unit: "Megabytes",
+                    name: 'My Custom Descending Benchmark - Memory Used',
+                    unit: 'Megabytes',
                     value: 100,
                 },
             ],
